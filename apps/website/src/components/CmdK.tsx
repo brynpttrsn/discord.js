@@ -2,6 +2,7 @@
 
 import type { ApiItemKind } from '@discordjs/api-extractor-model';
 import { VscArrowRight } from '@react-icons/all-files/vsc/VscArrowRight';
+import { VscListFilter } from '@react-icons/all-files/vsc/VscListFilter';
 import { VscSymbolClass } from '@react-icons/all-files/vsc/VscSymbolClass';
 import { VscSymbolEnum } from '@react-icons/all-files/vsc/VscSymbolEnum';
 import { VscSymbolEvent } from '@react-icons/all-files/vsc/VscSymbolEvent';
@@ -9,6 +10,7 @@ import { VscSymbolInterface } from '@react-icons/all-files/vsc/VscSymbolInterfac
 import { VscSymbolMethod } from '@react-icons/all-files/vsc/VscSymbolMethod';
 import { VscSymbolProperty } from '@react-icons/all-files/vsc/VscSymbolProperty';
 import { VscSymbolVariable } from '@react-icons/all-files/vsc/VscSymbolVariable';
+import { Button } from 'ariakit/button';
 import { Dialog } from 'ariakit/dialog';
 import { Command } from 'cmdk';
 import { usePathname, useRouter } from 'next/navigation';
@@ -105,7 +107,7 @@ export function CmdKDialog() {
 			const res = await client
 				.index(`${packageName?.replaceAll('.', '-')}-${version}`)
 				.search(searchString, { limit: 5 });
-			setSearchResults(res.hits);
+			setSearchResults([...res.hits, { name: 'test', kind: 'Property' }]);
 		};
 
 		if (search && packageName) {
@@ -133,6 +135,15 @@ export function CmdKDialog() {
 					<Command.Empty className="p-4 text-center">No results found</Command.Empty>
 					{search ? searchResultItems : null}
 				</Command.List>
+				<div className="border-t border-light-900 rounded rounded-t-0 bg-white/50 p-1 dark:border-dark-100 dark:bg-dark/50">
+					<Button
+						aria-label="Menu"
+						className="m-1 flex flex-row transform-gpu cursor-pointer select-none appearance-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple"
+						onClick={() => {}}
+					>
+						<VscListFilter size={24} />
+					</Button>
+				</div>
 			</Command>
 		</Dialog>
 	);
