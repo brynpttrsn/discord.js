@@ -2,7 +2,7 @@
 
 import type { ApiItemKind } from '@discordjs/api-extractor-model';
 import { VscArrowRight } from '@react-icons/all-files/vsc/VscArrowRight';
-import { VscListFilter } from '@react-icons/all-files/vsc/VscListFilter';
+import { VscFilter } from '@react-icons/all-files/vsc/VscFilter';
 import { VscSymbolClass } from '@react-icons/all-files/vsc/VscSymbolClass';
 import { VscSymbolEnum } from '@react-icons/all-files/vsc/VscSymbolEnum';
 import { VscSymbolEvent } from '@react-icons/all-files/vsc/VscSymbolEvent';
@@ -11,6 +11,7 @@ import { VscSymbolMethod } from '@react-icons/all-files/vsc/VscSymbolMethod';
 import { VscSymbolProperty } from '@react-icons/all-files/vsc/VscSymbolProperty';
 import { VscSymbolVariable } from '@react-icons/all-files/vsc/VscSymbolVariable';
 import { Button } from 'ariakit/button';
+import { Checkbox } from 'ariakit/checkbox';
 import { Dialog } from 'ariakit/dialog';
 import { Command } from 'cmdk';
 import { usePathname, useRouter } from 'next/navigation';
@@ -45,6 +46,7 @@ export function CmdKDialog() {
 	const router = useRouter();
 	const dialog = useCmdK();
 	const [search, setSearch] = useState('');
+	const [filterOpen, setFilterOpen] = useState(false);
 	const [searchResults, setSearchResults] = useState<any[]>([]);
 
 	const packageName = pathname?.split('/').slice(3, 4)[0];
@@ -131,19 +133,51 @@ export function CmdKDialog() {
 					placeholder="Quick search..."
 					value={search}
 				/>
+				<div className="border-b border-light-900 rounded rounded-b-0 bg-white/50 p-1 dark:border-dark-100 dark:bg-dark/50">
+					<Button
+						aria-label="Menu"
+						className="m-1 transform-gpu cursor-pointer select-none appearance-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple"
+						onClick={() => {
+							setFilterOpen((opened) => !opened);
+						}}
+					>
+						<VscFilter size={24} />
+					</Button>
+					<div className={`flex-col ${filterOpen ? 'flex' : 'hidden'}`}>
+						<label className="label">
+							<Checkbox className="m-1 transform-gpu cursor-pointer select-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple" />
+							Class
+						</label>
+						<label className="label">
+							<Checkbox className="m-1 transform-gpu cursor-pointer select-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple" />
+							Function
+						</label>
+						<label className="label">
+							<Checkbox className="m-1 transform-gpu cursor-pointer select-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple" />
+							Enum
+						</label>
+						<label className="label">
+							<Checkbox className="m-1 transform-gpu cursor-pointer select-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple" />
+							Interaction
+						</label>
+						<label className="label">
+							<Checkbox className="m-1 transform-gpu cursor-pointer select-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple" />
+							Type
+						</label>
+						<label className="label">
+							<Checkbox className="m-1 transform-gpu cursor-pointer select-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple" />
+							Variable
+						</label>
+						<label className="label">
+							<Checkbox className="m-1 transform-gpu cursor-pointer select-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple" />
+							Return
+						</label>
+					</div>
+				</div>
 				<Command.List className="pt-0">
 					<Command.Empty className="p-4 text-center">No results found</Command.Empty>
 					{search ? searchResultItems : null}
 				</Command.List>
-				<div className="border-t border-light-900 rounded rounded-t-0 bg-white/50 p-1 dark:border-dark-100 dark:bg-dark/50">
-					<Button
-						aria-label="Menu"
-						className="m-1 flex flex-row transform-gpu cursor-pointer select-none appearance-none place-items-center border-0 rounded bg-transparent text-sm font-semibold leading-none no-underline outline-none active:translate-y-px focus:ring focus:ring-width-2 focus:ring-blurple"
-						onClick={() => {}}
-					>
-						<VscListFilter size={24} />
-					</Button>
-				</div>
 			</Command>
 		</Dialog>
 	);
